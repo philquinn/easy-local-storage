@@ -1,4 +1,4 @@
-import getJson from './helpers';
+import getValue from './getValue';
 
 export default class EasyLocalStorage {
   constructor() {
@@ -7,19 +7,20 @@ export default class EasyLocalStorage {
     }
     this.storageMap = {};
     Object.keys(localStorage).forEach((key) => {
-      this.storageMap[key] = getJson(key);
+      this.storageMap[key] = getValue(key);
     });
-    let originalSetItem = Object.getPrototypeOf(localStorage).setItem;
-    Object.getPrototypeOf(localStorage).originalSetItem = originalSetItem;
+    Object.getPrototypeOf(localStorage)
+      .originalSetItem = Object.getPrototypeOf(localStorage).setItem;
     const newSetItem = (key, message) => this.add(key, message);
-    originalSetItem = newSetItem;
+    Object.getPrototypeOf(localStorage).setItem = newSetItem;
     window.easyLocalStorage = this;
     return this;
   }
 
   add(key, message) {
     this.storageMap[key] = message;
-    localStorage.originalSetItem(key, JSON.stringify(message));
+    const item = typeof message === 'object' ? JSON.stringify(message) : message;
+    localStorage.originalSetItem(key, item);
   }
 
   get(key) {

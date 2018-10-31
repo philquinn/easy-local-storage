@@ -7,16 +7,21 @@
     "@babel/cli": "7.1.2",
     "@babel/core": "7.1.2",
     "@babel/preset-env": "7.1.0",
+    "@babel/register": "7.0.0",
+    "chai": "4.2.0",
     "eslint": "5.8.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-react": "7.11.1"
+    "eslint-plugin-react": "7.11.1",
+    "mocha": "5.2.0"
   },
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "npm run lint && mocha --require @babel/register --recursive test -name *.spec.js",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": "philquinn/easy-local-storage"
 }

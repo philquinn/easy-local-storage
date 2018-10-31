@@ -2,6 +2,9 @@
   "extends": "airbnb",
   "globals": {
     "window": true,
-    "localStorage": true
+    "localStorage": true,
+    "describe": true,
+    "before": true,
+    "it": true
   }
 }
